@@ -9,6 +9,8 @@ connectDB()
 
 const app = express()
 
+app.use(express.json())
+
 //Rutas
 app.use('/api/projects', projectRoutes)
 
