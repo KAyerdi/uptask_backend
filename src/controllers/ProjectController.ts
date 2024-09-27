@@ -2,6 +2,7 @@ import type { Request, Response } from "express"
 import Project from "../models/Project"
 
 export class ProjectController {
+
   static createProject = async (req: Request, res: Response) => {
     const project = new Project(req.body)
 
@@ -14,7 +15,28 @@ export class ProjectController {
   }
 
   static getAllProjects = async (req: Request, res: Response) => {
-    res.send('Todos los proyectos')
+    try{
+      const projects = await Project.find({})
+      res.json(projects)
+    }catch(error){
+      console.log(error)
+    }
 }
+
+static getProjectById = async (req: Request, res: Response) => {
+  const { id } = req.params
+  console.log(id)
+  try{
+    const project = await Project.findById(id)
+    if(!project){
+      const error = new Error('Proyecto no encontado')
+      return res.status(404).json({error: error.message})
+    }
+    res.json(project)
+  }catch(error){
+    console.log(error)
+  }
+}
+
 }
 
