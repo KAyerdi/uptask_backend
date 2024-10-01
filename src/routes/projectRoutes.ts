@@ -51,7 +51,7 @@ router.delete('/:id',
 )
 /** Routes for task */
 router.post('/:projectId/tasks',
-  TaskController.createProject
+  TaskController.createTask
 )
 
 export default router
