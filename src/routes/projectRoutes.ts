@@ -7,6 +7,8 @@ import { validateProjectExist } from '../middleware/project'
 
 const router = Router()
 
+/** Routes for Project */
+
 router.post('/',
   body('projectName')
   .notEmpty().withMessage('El nombre del Proyecto es Obligatorio'),
@@ -60,6 +62,11 @@ router.post('/:projectId/tasks',
   .notEmpty().withMessage('La descripción de la tarea es Obligatorio'),
   handleInputErrors,
   TaskController.createTask
+)
+
+router.get('/:projectId/tasks',
+  validateProjectExist,
+  TaskController.getProjectTasks
 )
 
 export default router
