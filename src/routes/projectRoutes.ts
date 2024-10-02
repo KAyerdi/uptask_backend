@@ -1,9 +1,9 @@
 import { Router } from 'express'
 import { body, param } from 'express-validator'
 import { ProjectController } from '../controllers/ProjectController'
-import { handleInputErrors } from '../middleware/validation'
 import { TaskController } from '../controllers/TaskController'
 import { validateProjectExist } from '../middleware/project'
+import { handleInputErrors } from '../middleware/validation'
 
 const router = Router()
 
@@ -68,5 +68,11 @@ router.get('/:projectId/tasks',
   validateProjectExist,
   TaskController.getProjectTasks
 )
+
+router.get('/:projectId/tasks/:taskId',
+  validateProjectExist,
+  TaskController.getTaskById
+)
+
 
 export default router
