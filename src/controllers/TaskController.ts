@@ -32,13 +32,35 @@ export class TaskController {
         const error = new Error('Tarea no encontrada')
         return res.status(404).json({error: error.message})
       }
-      if(task.project !== req.project.id){
+
+      if(task.project.toString() !== req.project.id){
         const error = new Error('Accion no válida')
-        return res.status(404).json({error: error.message})
+        return res.status(400).json({error: error.message})
       }
       res.json(task)
     } catch(error) {
       res.status(500).json({error: 'Hubo un error'})
     }
   }
+
+  static updateTask = async (req: Request, res: Response) => {
+    try {
+      const { taskId } = req.params
+      const task = await Task.findByIdAndUpdate(taskId, req.body)
+      if(!task){
+        const error = new Error('Tarea no encontrada')
+        return res.status(404).json({error: error.message})
+      }
+
+      if(task.project.toString() !== req.project.id){
+        const error = new Error('Accion no válida')
+        return res.status(400).json({error: error.message})
+      }
+      res.send("Tarea Actualizada Correctamente")
+    } catch(error) {
+      res.status(500).json({error: 'Hubo un error'})
+    }
+  }
+
+
 }
